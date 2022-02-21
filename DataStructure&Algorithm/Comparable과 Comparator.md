@@ -1,5 +1,6 @@
 # Comparable과 Comparator
-Comparable과 Comparator 모두 **객체의 정렬** 기준을 명시하기 위한 **인터페이스** 이다. 그렇다면 이 인터페이스들은 정확히 어떤 역할을 수행하며 어떻게 사용하는 것인지 알아보도록 하자.     
+Comparable과 Comparator 모두 **객체의 정렬** 기준을 명시하기 위한 **인터페이스** 이다. primitive type을 정렬하는 데는 사용하지 않는다.      
+그렇다면 이 인터페이스들은 정확히 어떤 역할을 수행하며 어떻게 사용하는 것인지 알아보도록 하자.     
 
 <details>
 <summary>이 문서에서 참고하고있는 링크들</summary>
@@ -100,5 +101,110 @@ String 클래스에 오버라이딩된 compareTo로 비교하고 있는 것이�
 <br>
   
 ## Comparator
-- `java.lang.Comparable`       
-java.lang 패키지 내에 존재하기때문에 별다른 import 없이 사용 가능하다.
+- `java.util.Comparator`       
+java.util 패키지 내에 존재하기때문에 util package를 import 없이 사용 가능하다.         
+### description
+> Comparator는 일부 개체 컬렉션에 순서를 부과하는 비교 기능입니다. 원하는 대로 정렬 순서를 제어할 수 있도록 비교자(Comparator)를 정렬 메서드(`Collections.sort` / `Arrays.sort`)에 **전달** 할 수 있습니다.            
+
+Comparator 인터페이스를 구현하기 위해서는 해당 인터페이스의 Abstract Method인 compare(T o1, T o2) 메서드를 구현해야 한다.        
+![image](https://user-images.githubusercontent.com/84266499/155013879-22816a67-78de-44c0-8438-5fcfe2394690.png)          
+Method Summary에서는 Abstract Method가 `compare`와 `equals` 두 개인 것으로 보이지만, Comparator 또한 Comparable과 동일한 Functional Interface이다. `equals` 메서드는 Object에서 구현되어있기 때문에 인터페이스에서 별도로 (의무적으로) 구현할 필요가 없기 때문인데, 자세한 설명은 아래 링크를 참고하면 좋을 것 같다.       
+[참고 ](https://stackoverflow.com/questions/43616649/how-can-comparator-be-a-functional-interface-when-it-has-two-abstract-methods/43616692)      
+
+### Method Detail        
+> 순서에 대한 두 인수를 비교합니다. 첫 번째 인수가 두 번째 인수보다 작으면 음수, 같으면 0, 크면 양수를 반환합니다. (이외의 조건은 Comparable과 동일)
+
+
+<details>
+<summary>Comparable 코드</summary>
+<div markdown="1">       
+   
+Comparable에서 이용했던 Student 클래스를 이용하도록 하자. (Comparable 인터페이스는 구현되지 않은 상태)          
+Comparator를 이용해서 정렬을 하기 위해서는 Comparator 객체를 `Collections.sort` / `Arrays.sort` 메서드의 매개변수로 전달해주어야 한다.
+
+![image](https://user-images.githubusercontent.com/84266499/155014731-71156841-3bd5-4883-bfee-3d1a34a9b9ce.png)    
+![image](https://user-images.githubusercontent.com/84266499/155014800-e9ed036d-2a74-4cc1-9917-60afd458b2bf.png)      
+
+Comparator를 매개변수로 전달하는 방법으로는 두 가지가 있다.
+### Comparator를 implements하는 객체를 생성해서 해당 객체를 전달하는 방식           
+아래와 같이 omparator를 implements하는 객체를 만들어준다. 역시나 Abstract Method인 compare을 구현하지 않으면 컴파일 에러가 발생한다.     
+객체 정렬 기준은 학번을 기준으로 해 보았다.    
+````java
+class StudentComparator implements Comparator<Student> {
+	@Override
+	public int compare(Student s1, Student s2) {
+		return s1.stuNum.compareTo(s2.stuNum);
+	}
+}
+````  	
+이렇게 구현한 StudentComparator 객체를 만들어서 전달해주면 된다.      
+````java
+StudentComparator sc = new StudentComparator();
+Arrays.sort(students, sc);
+````     
+![image](https://user-images.githubusercontent.com/84266499/155015307-d6ac6f8f-d43c-4306-b9c4-26c329e8fbaa.png)          
+익명 객체로도 전달이 가능하다.     
+````java
+Arrays.sort(students, new StudentComparator());
+````    
+	
+
+### 익명 Comparator 객체를 매개변수로 바로 구현하는 방식           
+만약 해당 객체에서 한 번의 정렬만 일어나고 있는 상황이라면, 굳이 외부에서 Comparator 객체를 따로 만들어줄 필요 없이, 다음과 같이 익명 객체로 사용할 수 있다.      
+````java
+Arrays.sort(students, new Comparator<Student>() {
+	@Override
+	public int compare(Student s1, Student s2) {
+		return s1.stuNum.compareTo(s2.stuNum);
+	}
+});
+````     
+또한, 람다식으로도 구현 가능하다.
+````java
+Arrays.sort(students, (s1, s2) -> {
+	return s1.stuNum.compareTo(s2.stuNum);
+});
+```` 
+</div>
+</details>
+
+     
+<br>
+	
+## 정리 및 사용 시 주의점
+여기까지 Comparable과 Comparator의 차이점 및 사용방법에 대해서 알아보았다.      
+두 인터페이스의 가장 큰 차이는 클래스 내부에서 구현해서 사용하느냐, 함수에 전달해서 사용하느냐일 것이다.    
+즉, 클래스의 내부 구조를 건드릴 수 있는 사용자 정의 클래스 등과 같은 경우 Comparable을, 2차원 배열과 같이 구조를 건드릴 수 없는 경우에 Comparator를 사용하여 정렬하는 것이 적절할 것이다.
+
+### Collections.reverseOrder()
+배열이나 컬렉션을 역순으로 정렬할 때, 전달 인자로 `Collections.reverseOrder()`를 줄 수 있다.      
+![image](https://user-images.githubusercontent.com/84266499/155016186-a189be6e-da61-446e-96db-6952c4fe412c.png)        
+하지만 `primitive type`의 경우 이를 이용해서 정렬하는 것이 불가능하다. 위에서 보는 것과 같이 해당 메서드는 Comparator 객체를 반환해주는 함수인데, Comparator는 primitive type이 아닌 객체(Object)의 정렬 기준을 만들어주는 인터페이스이기 때문이다.       
+기본 타입을 역순으로 정렬해주고 싶다면 반복문 등을 이용해 직접 구현하거나, Wrapper Class형으로 변환하는 방법이 있다.     
+       
+### 비교 함수의 오버플로우
+위에서도 예시를 들었지만 `compare`나 `compareTo`같은 경우 객체의 두 값을 비교하여 음수, 0, 양수 중 한 값을 리턴하고, 이 리턴값에 따라서 정렬 순서가 정해지는데 만약 아래와 같은 경우. . . . 
+````java
+public class Test {
+	public static void main(String[] args) throws IOException {
+		Number[] numbers = { new Number(-200), new Number(Integer.MAX_VALUE), new Number(3), new Number(1000) };
+		Arrays.sort(numbers, (n1, n2) -> {
+			return n1.num - n2.num;
+		});
+
+		for (Number number : numbers)
+			System.out.println(number.num);
+	}
+}
+
+class Number {
+	int num;
+
+	Number(int num) {
+		this.num = num;
+	}
+}
+````       
+![image](https://user-images.githubusercontent.com/84266499/155016928-fd2717c5-8441-41c1-a556-839bb37a57e6.png)        
+숫자를 비교할 때 int범위를 초과하게 되면서 정상적인 값이 return되지 않고, 정렬 순서에 오류가 발생하게 되는 것이다.      
+이러한 경우를 주의해주도록 하자.
