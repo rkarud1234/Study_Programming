@@ -102,7 +102,7 @@ String 클래스에 오버라이딩된 compareTo로 비교하고 있는 것이�
   
 ## Comparator
 - `java.util.Comparator`       
-java.util 패키지 내에 존재하기때문에 util package를 import 없이 사용 가능하다.         
+java.util 패키지 내에 존재하기때문에 util package를 import 해야만 사용 가능하다.         
 ### description
 > Comparator는 일부 개체 컬렉션에 순서를 부과하는 비교 기능입니다. 원하는 대로 정렬 순서를 제어할 수 있도록 비교자(Comparator)를 정렬 메서드(`Collections.sort` / `Arrays.sort`)에 **전달** 할 수 있습니다.            
 
@@ -174,6 +174,8 @@ Arrays.sort(students, (s1, s2) -> {
 ## 정리 및 사용 시 주의점
 여기까지 Comparable과 Comparator의 차이점 및 사용방법에 대해서 알아보았다.      
 두 인터페이스의 가장 큰 차이는 클래스 내부에서 구현해서 사용하느냐, 함수에 전달해서 사용하느냐일 것이다.    
+Comparable의 경우 클래스 내부에서 구현하기 때문에, 해당 객체의 모든 인스턴스에 적용될 수 있지만, Comparator의 경우 함수에 전달해서 사용하는 것이기 때문에 일부 인스턴스에만 적용된다.       
+만약 Comparable을 구현한 객체에 Comparator를 전달한다면 Comparator의 정렬 기준이 우선적으로 적용된다.       
 즉, 클래스의 내부 구조를 건드릴 수 있는 사용자 정의 클래스 등과 같은 경우 Comparable을, 2차원 배열과 같이 구조를 건드릴 수 없는 경우에 Comparator를 사용하여 정렬하는 것이 적절할 것이다.
 
 ### Collections.reverseOrder()
