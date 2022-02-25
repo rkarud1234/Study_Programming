@@ -299,8 +299,9 @@ while(!pq.isEmpty()) {
 |O(Elog2(E))|O(n^2)|
 
 <br>
+<br>
 
-### 문제 풀러가기
-[KRUSCAL 알고리즘 대표 문제: 백준1197-최소 스패닝 트리](https://www.acmicpc.net/problem/1197)     
-[PRIM 알고리즘 대표 문제: 백준 4386-별](https://www.acmicpc.net/problem/4386)     
-[스패닝 트리 관련 문제 풀러가기](https://www.acmicpc.net/problemset?sort=ac_desc&algo=49)     
+## 스패닝 트리 연습하기(문제)    
+- [KRUSCAL 알고리즘 대표 문제: 백준1197-최소 스패닝 트리](https://www.acmicpc.net/problem/1197)      
+- [PRIM 알고리즘 대표 문제: 백준 4386-별](https://www.acmicpc.net/problem/4386)      
+- [스패닝 트리 관련 문제 풀러가기](https://www.acmicpc.net/problemset?sort=ac_desc&algo=49)      
