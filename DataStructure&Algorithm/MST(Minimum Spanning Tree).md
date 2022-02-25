@@ -34,7 +34,7 @@
 
 
 ### 2.1 KRUSCAL 알고리즘     
-KRUSCAL 알고리즘은 그래프의 연결 구조를 **간선 중심**으로 판별하여 MST를 찾는 알고리즘이다. 이 알고리즘을 이해하기 위해서는 먼저 유니온 파인드 알고리즘에 대해서 알아야 한다. 유니온 파인드 알고리즘에 대해서 잘 모른다면 그것을 먼저 학습하도록([유니온 파인드 공부하러가기](https://github.com/rkarud1234/Study_Programming/blob/main/DataStructure%26Algorithm/UnionFind.md))      
+KRUSCAL 알고리즘은 그래프의 연결 구조를 **간선 중심**으로 판별하여 MST를 찾는 알고리즘이다. 간선 중심으로 판별하기 때문에 간선 리스트를 사용한다. 이 알고리즘을 이해하기 위해서는 먼저 유니온 파인드 알고리즘에 대해서 알아야 한다. 유니온 파인드 알고리즘에 대해서 잘 모른다면 그것을 먼저 학습하도록([유니온 파인드 공부하러가기](https://github.com/rkarud1234/Study_Programming/blob/main/DataStructure%26Algorithm/UnionFind.md))      
 크루스칼 알고리즘의 절차는 다음과 같다.      
 1. 그래프의 간선 정보를 모두 입력받는다.
 2. 입력된 간선 정보를 **가중치**가 **작은** 순서대로 정렬한다.
@@ -135,6 +135,172 @@ private static boolean union(int a, int b) {
 }
 ````
 
-KRUSCAL 알고리즘은 이와 같이 간단히 구현할 수 있으며, **간선 중심**으로 알고리즘을 수행하기 때문에 **정점 수에 비해 간선 수가 적은 그래프**에서 수행하기 유리한 알고리즘이다. 
+KRUSCAL 알고리즘은 이와 같이 간단히 구현할 수 있으며, **간선 중심**으로 알고리즘을 수행하기 때문에 **정점 수에 비해 간선 수가 적은 희소 그래프(Sparse Graph)** 에서 수행하기 적합한 알고리즘이다. 
+
+### 2.2 PRIM 알고리즘     
+PRIM 알고리즘은 그래프의 연결 구조를 **정점 중심**으로 판별하여 MST를 찾는 알고리즘이다. 정점 중심으로 탐색을 수행하기때문에 인접 행렬이나 인접 리스트를 사용한다.     
+프림 알고리즘의 절차는 다음과 같다.    
+1. 그래프의 임의의 한 점에서 탐색을 시작한다.
+2. 해당 점에서 연결할 수 있는 정점들 중 가장 낮은 가중치로 연결할 수 있는 정점과 연결한다.
+3. 연결한 정점에서 2번을 수행한다. (단, 이미 연결된 간선, 정점은 제외하고 판단)
+
+PRIM 알고리즘은 말로만 설명하면 조금 와닿지 않기 때문에 그림을 같이 봐보도록 하자.      
+PRIM 알고리즘을 수행할 때 시작 정점은 어디든지 상관 없다. 이번에는 임의의 정점 `D`에서 시작해보도록 하자.    
+D에서 연결할 수 있는 간선들의 가중치 `2, 4, 7, 11`중 가장 작은 가중치 `2`를 갖는 간선과 연결해준다.      
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/84266499/155751476-bcb3f58a-1b14-4f33-ba77-af702186881b.png" width="80%" height="80%"/>
+</div>
+<br>
 
 
+그럼 이제 `D,F`가 그룹에 속해있고, 그룹에서 연결할 수 있는 간선인 `4,6,7,11`중 가장 작은 가중치 `4`를 갖는 간선과 연결해준다.
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/84266499/155751696-54bf0325-dac6-4505-9c6b-fae9bf46fc88.png" width="80%" height="80%"/>
+</div>
+<br>
+
+그룹: `C,D,F` / 가능한 간선: `1,6,7,11` / 최소 가중치 간선인 `1`에 연결
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/84266499/155751744-a2e4c29e-8b4a-4de7-b584-17f91a31bd89.png" width="80%" height="80%"/>
+</div>
+<br>
+
+그룹: `B,C,D,F` / 가능한 간선: `5,6,7,8,11` / 최소 가중치 간선인 `5`에 연결     
+이 때, `E`연결되기 때문에 `E`와 연결되어 있던 다른 간선(`6`,`11`)들은 사용하지 않게 된다.   
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/84266499/155751788-efeb8cb9-ac00-4d3b-8687-126f07b9f26d.png" width="80%" height="80%"/>
+</div>
+<br>
+
+
+
+그룹: `B,C,D,E,F` / 가능한 간선: `7,8` / 최소 가중치 간선인 `11`에 연결       
+`8`간선은 사용X
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/84266499/155751920-2336e172-ae0d-4068-8509-82fdac4bbd20.png" width="80%" height="80%"/>
+</div>
+<br>
+
+> 알고리즘 수행하는 과정을 잘 보면 가능한 간선의 가중치 중 최소인 간선을 먼저 꺼내야하기 때문에 이 또한 `Node(from, to, weight)` 타입을 저장할 수 있는 `PriorityQueue`로도 구현이 가능하다.
+
+이렇게 해서 최소 스패닝 트리를 완성하였다.    
+이 알고리즘을 구현하면 순서는 다음과 같다.      
+
+1. 아무 정점에서 시작. 시작할 때 시작 정점의 `visit`값을 `true`로 설정한다.
+2. 해당 정점과 연결 가능한 아직 방문하지 않은(`visit==false`) 정점 중, 최소 가중치 값으로 이을 수 있는 정점을 찾는다.
+3. 찾은 정점과 연결해주고, 도착한 정점의 `visit`을 `true`로 변경한다.
+
+
+#### PRIM 알고리즘 구현하기
+
+**1. 배열 버전**
+- **아무 정점에서 시작하기**
+````java
+boolean[] visit = new boolean[v + 1]; // 방문 체크 배열
+int[] minEdge = new int[v + 1]; // 최소 가중치값을 저장할 배열
+Arrays.fill(minEdge, Integer.MAX_VALUE); // 최솟값을 저장해야하기 때문에 충분히 큰 값으로 배열을 초기화해준다.
+
+// visit check는 처음에 하지 않는다. 구현하는 순서를 보면 왜인지 알 수 있음
+// visit[start] = true;
+minEdge[start] = 0;
+````
+
+- **스패닝 트리에 포함되지 않은 원소들 중 최소비용을 갖는 원소 뽑기**
+`for(i)`문을 통해서 돌리고 있지만 인덱스가 의미를 갖지는 않는다. 단지 `n`번을 반복하기 위해 사용했을 뿐 정점 순서대로 진행하지 않는다는 점을 명심하라.
+````java
+for (int i = 0; i < n; i++) {
+   // 최솟값과 그 정점을 저장할 변수를 대충 만들어준다.
+   int min = Integer.MAX_VALUE;
+   int minV = 0;
+   
+   for (int j = 0; j < n; j++) {
+      if (!visit[j] && min > minEdge[j]) { // 아직 스패닝 트리에 연결되어있지 않은 정점인데, 닿을 수 있는 거리가 현재보다 짧다.
+         // 그러면 그거랑 연결해야함
+         min = minEdge[j];
+         minV = j;
+      }
+   }
+   
+   // 위의 for(j)문을 통해서 아직 방문한 적 없는 정점 중 최소 비용으로 닿을 수 있는 점을 찾았다.
+   // 그러면 그 정점을 신장트리에 포함해준다.
+   visit[minV] = true; // 방문체크 완료
+   
+   // 새로운 정점이 선택되었으니, 해당 정점에서 갈 수 있는 최솟값을 갱신해주자
+   for (int j = 0; j < n; j++) {
+      // 아직 방문하지 않았고 && 방문할 길이 있으며 && 현재 그 점에 갈 수 있는 비용보다 더 적은 비용으로 갈 수 있다면
+      if (!visit[j] && adj[minV][j] != 0 && minEdge[j] > adj[minV][j])
+         // 비용을 최솟값으로 갱신
+         minEdge[j] = adj[minV][j];
+   }
+}
+````
+이 과정을 마치면 `minEdge` 배열에는 해당 정점을 연결할 수 있는 가중치의 최솟값들이 저장된다.     
+이를 이용해 MST의 가중치를 구할 수 있다.
+
+**2. 우선순위 큐 버전**     
+위의 PRIM 알고리즘 설명에서 말했듯 최소 가중치로 갈 수 있는 정점을 먼저 연결해야 하기에 그 정점 정보를 `PriorityQueue`에 저장하기만 하면 된다!   
+물론 이를 위해 우리는 `Comparable`이 구현된 `Node` 클래스가 필요할 것이다.
+
+````java
+class Node implements Comparable<Node> {
+   int v, weight; // 정점번호, 가중치
+   
+   Node (int v, int weight) {
+      this.v = v;
+      this.weight = weight;
+   }
+   
+   @Override
+   public int compareTo (Node n) {
+      return weight - n.weight;
+   }
+}
+````
+
+`Node` 클래스의 구현이 완료되었다면 최솟값 찾는 부분만 다시 구현해주면 된다.     
+
+````java
+// 시작점을 pq에 담고 시작한다.
+pq.offer(new Node(start, 0));
+
+while(!pq.isEmpty()) {
+   Node node = pq.poll(); // 가장 유리한 정점이 자동으로 나온다.
+   
+   if (visit[node.v]) // 연결된 정점에 또 연결하지 않도록 판별해주는 작업
+      continue;
+   
+   visit[node.v] = true; // 연결되지 않았던 정점은 연결처리해주고
+   ans += node.weight; // MST의 가중치에 현재 정점의 가중치를 더해준다.
+   
+   // 더해진 정점에서 갈 수 있는 간선들의 정보를 업데이트해주기만 하면 끝
+   for (int i = 0; i < n; i++) // 인접행렬 이용
+      if ( adj[node.n][i] != 0 && !visit[i] )
+         pq.offer(new Node(i, adj[node.n][i]));
+      
+   for (Node next: adj[node.d]) // 인접 리스트 이용
+      pq.offer(next);
+}
+````
+
+<br>
+
+### 마무리
+이렇게 해서 MST를 구하는 방법에 대해서 공부해보았다.     
+ KRUSCAL  | PRIM 
+|:-------:|:--------:|
+|간선 중심|정점 중심|
+|정점의 수가 간선의 수에 비해 많을 때 사용|간선의 수가 상대적으로 많을 때 사용|
+|유니온 파인드를 이용해 구현|PriorityQueue 또는 배열을 이용해 구현|
+|O(Elog2(E))|O(n^2)|
+
+<br>
+
+### 문제 풀러가기
+[KRUSCAL 알고리즘 대표 문제: 백준1197-최소 스패닝 트리](https://www.acmicpc.net/problem/1197)
+[PRIM 알고리즘 대표 문제: 백준 4386-별](https://www.acmicpc.net/problem/4386)
+[스패닝 트리 관련 문제 풀러가기](https://www.acmicpc.net/problemset?sort=ac_desc&algo=49)
