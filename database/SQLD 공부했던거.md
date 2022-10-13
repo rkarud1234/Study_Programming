@@ -291,9 +291,9 @@
 - 테이블의 컬럼이 원자값을 갖도록 테이블을 분해하는 것
 - 함수 종속과 복수의 속성값을 갖는 속성을 분리하여 속성의 원자성을 확보
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f492a2be-a182-4399-9436-329c5e227c8b/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195621882-d4f434b0-e50b-4b64-9055-39dd51d55431.png)    
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ec83d272-7d4e-4f6b-930d-4d156b91c241/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195621905-8f694f20-9696-49d3-837c-3cea353b57c2.png)    
 
 ### 제 2 정규화
 
@@ -301,9 +301,10 @@
 - 함수 종속, 주식별자에 완전 종속적이지 않는 속성, 부분 종속 속성을 분리한다.
 - 완전 함수 종속: 기본키의 부분집합이 결정자가 되어선 안된다는 것
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/46b38951-37a8-4002-99b9-2fd66b38f4b1/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195621949-f1c91f9f-e745-4539-a105-69833e3928b9.png)    
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6da6303e-32b7-420b-9713-def1f5bd16e4/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195621981-7ba4f2e1-db39-4360-942a-e121146c9231.png)    
+
 
 ### 제 3 정규화
 
@@ -311,18 +312,20 @@
 - 함수 종속, 일반 속성에 종속적인 속성, 이전종속 속성을 분리한다.
 - 이행적 종속: A→B, B→C가 성립할 때 A→C가 성립되는 것
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68aade7c-7fd3-49b2-86b8-1de5c263b8c5/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195622034-c00473df-e3ae-4655-86fa-00bfb1c379a8.png)    
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/488f316c-e2bc-46b7-8d8c-3672505b4f73/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195622057-d11af60a-e893-467a-92cc-761e665ed6ed.png)    
+
 
 ### 보이스-코드 정규화(BCNF)
 
 - 제 3정규화를 진행한 테이블에 대해 모든 결정자가 후보키가 되도록 테이블을 분해하는 것
 - 함수 종속, 결정자 안에 함수 종속을 가진 주식별자를 분리한다
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/60d9f38c-4537-4047-994c-d4f9da3c4de5/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195622095-f4f52e5b-be35-41e7-ae18-f3c40ac5f3ec.png)    
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/175d4f33-b796-4ac5-a750-f04ee76fef95/Untitled.png)
+![image](https://user-images.githubusercontent.com/84266499/195622111-212dcca1-88fa-44c5-bac7-cb7cceafeb4c.png)    
+
 
 ### 제4 정규화
 
@@ -840,8 +843,8 @@ ORDER BY 컬럼명 (ASC, DESC)
 ### 집계함수
 
 - **null과의 관계 중요**
+![image](https://user-images.githubusercontent.com/84266499/195622252-234b79ef-8902-48c4-b5c9-9130cef4b529.png)    
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a60593b-cb65-4be4-87ea-ebfdc389ea0b/Untitled.png)
 
 - SUM(A) = 3    SUM(B) = 4
 - COUNT(A) = 1    COUNT(*) = 3
