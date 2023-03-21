@@ -40,3 +40,7 @@ IPC의 방식 중 한 가지로, 메서드 호출 내부 통신을 숨겨주며,
 - Marshaling/UnMarshaling
     - Marshaling은 데이터를 바이트로 쪼개서 TCP/IP와 같은 통신 채널을 통해 전송될 수 있는 형태로 바꿔주는 과정
     - UnMarshaling은 반대로 전송 받은 바이트를 원래의 데이터 형태로 복원하는 과정
+
+<br>
+<br>
+RPC에 대한 추가 내용들 : [jakeseo's velog - RPC란?](https://velog.io/@jakeseo_me/RPC%EB%9E%80)
