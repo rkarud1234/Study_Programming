@@ -66,6 +66,22 @@ minorGC를 할 때, young에서 오래 남아있던 녀석들은 old로 옮기�
 ### Non-Heap Space 구조
 ![image](https://github.com/rkarud1234/TIL/assets/84266499/cef67f00-cbfb-4873-9ba2-c78f105fe7f1)   
 
+JVM이 관리하지는 않지만, JVM이 사용하는 영역      
+
+- MetaSpace : 클래스의 메타데이터를 저장하는 영역. Java8 이전까지는 힙 영역에 존재했었다.     
+    - Class Space : 클라스 관련 메타데이터, virtual method나 인터페이스의 메타데이터를 저장하기도 한다.     
+    GC에서 사용할 메모리 레퍼런스가 어떻게 되는지 저장하기도 함(OopMap)     
+    - Non-Class Space : 상수 풀, virtual method(오버라이드 가능한) 메소드가 아닌, 클래스 메타데이터, 메소드 카운터, 어노테이션 메타데이터 등을 포함한다.     
+- Thread Memory(Stack Memory) : 아직 실행이 안 끝난 메소드와 그 메소드의 로컬 변수 등이 포함     
+- Code Cache    
+    - JVM 에서 bytecode로 컴파일됨     
+    - bytecode를 machine 코드로 JVM interpreter가 바꿔줌     
+    - JIT compiler 가 런타임에 최적화 추가로 더 해줌     
+    
+    위의 JVM 기반 어플리케이션이 동작하는 과정에서 컴파일된 바이트코드를 캐싱하는 역할     
+    
+- Garbage Collector Data : GC 알고리즘에 관한 다양한 데이터구조와 병렬처리를 위한 스레드 정보    
+  
 참고링크 : https://juneyr.dev/jvm-basics   
 
 ## 모니터링 환경 구축
